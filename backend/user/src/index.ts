@@ -1,0 +1,31 @@
+import express from 'express'
+import dotenv from 'dotenv'
+import connectDB from './config/db.js';
+dotenv.config()
+import {createClient} from 'redis'
+import userRoutes from './routes/userRouter.js'
+import { connectRabbitMQ } from './config/rabitmq.js';
+
+
+const app = express();
+
+app.use("api/v1", userRoutes)
+
+connectDB();
+connectRabbitMQ();
+const redisUrl = process.env.REDIS_URL
+if (!redisUrl) {
+    throw new Error('REDIS_URL is not configured')
+}
+
+export const redisClient = createClient({
+    url: redisUrl,
+})
+
+redisClient.connect().then(() => console.log("connected to redis")).catch(console.error)
+
+const port = process.env.PORT || 3000
+
+app.listen(port, () => {
+    console.log(`server is running on port ${port}`)
+})
