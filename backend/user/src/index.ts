@@ -8,8 +8,9 @@ import { connectRabbitMQ } from './config/rabitmq.js';
 
 
 const app = express();
+app.use(express.json())
 
-app.use("api/v1", userRoutes)
+app.use("/api/v1", userRoutes)
 
 connectDB();
 connectRabbitMQ();
@@ -24,7 +25,7 @@ export const redisClient = createClient({
 
 redisClient.connect().then(() => console.log("connected to redis")).catch(console.error)
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3001
 
 app.listen(port, () => {
     console.log(`server is running on port ${port}`)

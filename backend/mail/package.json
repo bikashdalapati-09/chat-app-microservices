@@ -2,8 +2,12 @@
   "name": "mail",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "concurrently \"tsc -w\" \"nodemon dist/index.js\""
   },
   "keywords": [],
   "author": "",
@@ -19,6 +23,8 @@
     "@types/amqplib": "^0.10.8",
     "@types/dotenv": "^6.1.1",
     "@types/express": "^5.0.6",
-    "@types/nodemailer": "^8.0.2"
+    "@types/nodemailer": "^8.0.2",
+    "concurrently": "^10.0.6",
+    "nodemon": "^3.1.14"
   }
 }
